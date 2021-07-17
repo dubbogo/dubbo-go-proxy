@@ -23,14 +23,6 @@ resources:
     type: restful
     description: user
     timeout: 100ms
-    plugins:
-      pre:
-        pluginNames:
-          - rate limit
-          - access
-      post:
-        groupNames:
-          - group2
     methods:
       - httpVerb: GET
         onAir: true
@@ -63,24 +55,6 @@ resources:
           path: /UserProvider/CreateUser
           group: "test"
           version: 1.0.0
-pluginFilePath: ""
-pluginsGroup:
-  - groupName: "group1"
-    plugins:
-      - name: "rate limit"
-        version: "0.0.1"
-        priority: 1000
-        externalLookupName: "ExternalPluginRateLimit"
-      - name: "access"
-        version: "0.0.1"
-        priority: 1000
-        externalLookupName: "ExternalPluginAccess"
-  - groupName: "group2"
-    plugins:
-      - name: "trace"
-        version: "0.0.1"
-        priority: 1000
-        externalLookupName: "ExternalPluginTrace"
 rateLimit:
   resources:
     - name: test-dubbo

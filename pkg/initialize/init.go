@@ -22,7 +22,6 @@ import (
 	"github.com/apache/dubbo-go-pixiu/pkg/filter/api"
 	"github.com/apache/dubbo-go-pixiu/pkg/filter/authority"
 	"github.com/apache/dubbo-go-pixiu/pkg/filter/metric"
-	"github.com/apache/dubbo-go-pixiu/pkg/filter/plugins"
 	"github.com/apache/dubbo-go-pixiu/pkg/filter/ratelimit"
 	"github.com/apache/dubbo-go-pixiu/pkg/filter/recovery"
 	"github.com/apache/dubbo-go-pixiu/pkg/filter/remote"
@@ -51,7 +50,6 @@ func filterInit(config *config.APIConfig) {
 	response.Init()
 	timeout.Init()
 	ratelimit.Init(&config.RateLimit)
-	plugins.Init(config.PluginsGroup, config.PluginFilePath, config.Resources)
 }
 
 func apiDiscoveryServiceInit() {

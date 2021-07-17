@@ -24,14 +24,6 @@ resources:
     description: resource documentation
     filters:
       - filter0
-    plugins:
-      pre:
-        pluginNames:
-          - rate limit
-          - access
-      post:
-        groupNames:
-          - group2
     methods:
       - httpVerb: GET
         filters:
@@ -174,21 +166,3 @@ definitions:
           }
         }
       }
-pluginFilePath: ""
-pluginsGroup:
-  - groupName: "group1"
-    plugins:
-      - name: "rate limit"
-        version: "0.0.1"
-        priority: 1000
-        externalLookupName: "ExternalPluginRateLimit"
-      - name: "access"
-        version: "0.0.1"
-        priority: 1000
-        externalLookupName: "ExternalPluginAccess"
-  - groupName: "group2"
-    plugins:
-      - name: "blacklist"
-        version: "0.0.1"
-        priority: 1000
-        externalLookupName: "ExternalPluginBlackList"

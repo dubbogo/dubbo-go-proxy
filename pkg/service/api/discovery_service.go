@@ -27,7 +27,6 @@ import (
 	"github.com/apache/dubbo-go-pixiu/pkg/common/constant"
 	"github.com/apache/dubbo-go-pixiu/pkg/common/extension"
 	pc "github.com/apache/dubbo-go-pixiu/pkg/config"
-	"github.com/apache/dubbo-go-pixiu/pkg/filter/plugins"
 	"github.com/apache/dubbo-go-pixiu/pkg/filter/ratelimit"
 	"github.com/apache/dubbo-go-pixiu/pkg/router"
 	"github.com/apache/dubbo-go-pixiu/pkg/service"
@@ -270,14 +269,6 @@ func loadAPIFromMethods(fullPath string, methods []config.Method, headers map[st
 		return errors.New(strings.Join(errStack, "\n"))
 	}
 	return nil
-}
-
-func (l *LocalMemoryAPIDiscoveryService) PluginPathChange(filePath string) {
-	plugins.OnFilePathChange(filePath)
-}
-
-func (l *LocalMemoryAPIDiscoveryService) PluginGroupChange(group []config.PluginsGroup) {
-	plugins.OnGroupUpdate(group)
 }
 
 func (l *LocalMemoryAPIDiscoveryService) RateLimitChange(c *ratelimitConf.Config) {
