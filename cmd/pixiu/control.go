@@ -83,11 +83,15 @@ var (
 			flagLogLevel := c.String("log-level")
 			logConfPath := c.String("log-config")
 
+			err := logger.InitLog(logConfPath)
+			if err != nil {
+				return err
+			}
+
 			bootstrap := config.Load(configPath)
 			if logLevel, ok := flagToLogLevel[flagLogLevel]; ok {
 				logger.SetLoggerLevel(logLevel)
 			}
-			logger.InitLog(logConfPath)
 
 			initFromRemote := false
 			if bootstrap.GetAPIMetaConfig() != nil {
