@@ -44,8 +44,8 @@ ifeq (windows,$(os))
 	targetName = dubbo-go-pixiu.exe
 endif
 exe := $(mainPath)$(targetName)
-build:
-	cd $(mainPath) && go build  -o $(targetName)
+gobuild:
+	cd $(mainPath) && go build  -o $(currentPath)/$(targetName) *.go
 
 run: build
-	cp $(exe) $(currentPath) && ./dubbo-go-pixiu start -a $(api-config-path) -c $(config-path)
+	./dubbo-go-pixiu start -a $(api-config-path) -c $(config-path)
