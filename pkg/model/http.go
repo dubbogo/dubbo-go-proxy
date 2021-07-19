@@ -17,6 +17,11 @@
 
 package model
 
+import (
+	"github.com/apache/dubbo-go-pixiu/pkg/logger"
+	"github.com/mitchellh/mapstructure"
+)
+
 // HttpConnectionManager
 type HttpConnectionManager struct {
 	RouteConfig       RouteConfiguration     `yaml:"route_config" json:"route_config" mapstructure:"route_config"`
@@ -88,4 +93,16 @@ type HttpConfig struct {
 	ReadTimeoutStr  string `json:"read_timeout,omitempty" yaml:"read_timeout,omitempty" mapstructure:"read_timeout"`
 	WriteTimeoutStr string `json:"write_timeout,omitempty" yaml:"write_timeout,omitempty" mapstructure:"write_timeout"`
 	MaxHeaderBytes  int    `json:"max_header_bytes,omitempty" yaml:"max_header_bytes,omitempty" mapstructure:"max_header_bytes"`
+	CertFile        string `yaml:"cert_file" json:"cert_file" mapstructure:"cert_file"`
+	KeyFile         string `yaml:"key_file" json:"key_file" mapstructure:"key_file"`
+}
+
+func MapInStruct(cfg interface{}) *HttpConfig {
+	var hc *HttpConfig
+	if cfg != nil {
+		if ok := mapstructure.Decode(cfg, &hc); ok != nil {
+			logger.Error("Config error", ok)
+		}
+	}
+	return hc
 }

@@ -56,11 +56,37 @@ func (l *ListenerService) Start() {
 	switch l.Address.SocketAddress.Protocol {
 	case model.HTTP:
 		l.httpListener()
+	case model.HTTPS:
+		l.httpsListener()
 	default:
 		panic("unsupported protocol start: " + l.Address.SocketAddress.ProtocolStr)
 	}
 }
+func (l *ListenerService) httpsListener() {
+	hl := NewDefaultHttpListener()
+	hl.pool.New = func() interface{} {
+		return l.allocateContext()
+	}
+	// user customize http config
+	var hc *model.HttpConfig
+	hc = model.MapInStruct(l.Config)
 
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", hl.ServeHTTP)
+
+	srv := http.Server{
+		Addr:           resolveAddress(l.Address.SocketAddress.Address + ":" + strconv.Itoa(l.Address.SocketAddress.Port)),
+		Handler:        mux,
+		ReadTimeout:    resolveStr2Time(hc.ReadTimeoutStr, 20*time.Second),
+		WriteTimeout:   resolveStr2Time(hc.WriteTimeoutStr, 20*time.Second),
+		IdleTimeout:    resolveStr2Time(hc.IdleTimeoutStr, 20*time.Second),
+		MaxHeaderBytes: resolveInt2IntProp(hc.MaxHeaderBytes, 1<<20),
+	}
+
+	logger.Infof("[dubbo-go-pixiu] httpsListener start at : %s", srv.Addr)
+	err := srv.ListenAndServeTLS(hc.CertFile, hc.KeyFile)
+	logger.Info("[dubbo-go-pixiu] httpsListener result:", err)
+}
 func (l *ListenerService) httpListener() {
 	hl := NewDefaultHttpListener()
 	hl.pool.New = func() interface{} {
@@ -68,12 +94,8 @@ func (l *ListenerService) httpListener() {
 	}
 
 	// user customize http config
-	var hc model.HttpConfig
-	if l.Config != nil {
-		if c, ok := l.Config.(*model.HttpConfig); ok {
-			hc = *c
-		}
-	}
+	var hc *model.HttpConfig
+	hc = model.MapInStruct(l.Config)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", hl.ServeHTTP)

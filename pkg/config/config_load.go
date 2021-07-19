@@ -124,6 +124,7 @@ func GetHttpConfig(cfg *model.Bootstrap) (err error) {
 		hc := &model.HttpConfig{}
 		if l.Config != nil {
 			if v, ok := l.Config.(map[string]interface{}); ok {
+				logger.Info("http config:", v, ok)
 				switch l.Name {
 				case constant.DefaultHTTPType:
 					if err := mapstructure.Decode(v, hc); err != nil {

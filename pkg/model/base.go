@@ -56,6 +56,7 @@ const (
 	HTTP ProtocolType = 0 + iota // support for 1.0
 	TCP
 	UDP
+	HTTPS
 )
 
 // ProtocolTypeName
@@ -63,13 +64,15 @@ var ProtocolTypeName = map[int32]string{
 	0: "HTTP",
 	1: "TCP",
 	2: "UDP",
+	3: "HTTPS",
 }
 
 // ProtocolTypeValue
 var ProtocolTypeValue = map[string]int32{
-	"HTTP": 0,
-	"TCP":  1,
-	"UDP":  2,
+	"HTTP":  0,
+	"TCP":   1,
+	"UDP":   2,
+	"HTTPS": 3,
 }
 
 // Address the address

@@ -60,7 +60,7 @@ func (p *PX) Start() {
 	listeners := conf.GetListeners()
 
 	for _, s := range listeners {
-		ls := ListenerService{Listener: &s}
+		ls := ListenerService{Listener: s}
 		go ls.Start()
 	}
 

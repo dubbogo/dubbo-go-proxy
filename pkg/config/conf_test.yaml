@@ -22,9 +22,9 @@ static_resources:
     - name: "net/http"
       address:
         socket_address:
-          protocol_type: "HTTP"
+          protocol_type: "HTTPS"
           address: "0.0.0.0"
-          port: 8888
+          port: 443
       filter_chains:
         - filter_chain_match:
             domains:
