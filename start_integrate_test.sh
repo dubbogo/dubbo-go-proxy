@@ -26,7 +26,7 @@ array+=("samples/dubbogo/simple/uri")
 
 for((i=0;i<${#array[*]};i++))
 do
-	./integrate_test.sh ${array[i]}
+	sh ./integrate_test.sh ${array[i]}
 	result=$?
 	if [ $result -gt 0 ]; then
     exit $result
