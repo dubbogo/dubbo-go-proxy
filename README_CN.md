@@ -28,7 +28,7 @@ dubbo-go-pixiu 网关支持调用Java的dubbo集群和golang的dubbo-go集群。
 
 #### 启动 Pixiu
 
-1. `make build` 构建出二进制包
+1. `make gobuild` 构建出二进制包
 2. `make start` 启动pixiu
 
 #### 快速入门

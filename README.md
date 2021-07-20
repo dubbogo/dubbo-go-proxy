@@ -30,7 +30,7 @@ It supports HTTP-to-Dubbo and HTTP-to-HTTP proxy and more protocols will be supp
 
 #### Start Pixiu
 
-1. Build the binary with `make build`
+1. Build the binary with `make gobuild`
 2. Start the pixiu with `make start`
 
 #### Quick Guide
